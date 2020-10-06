@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
+import axios from 'axios';
+
 const ProductScreen = ({ match }) => {
-  const product = products.find((p) => p._id === match.params.id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, []);
 
   return (
     <>
@@ -38,10 +47,10 @@ const ProductScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>
-                    <h8>Giá:</h8>
+                    <p>Giá:</p>
                   </Col>
                   <Col>
-                    <h8>{product.price} VND</h8>
+                    <p>{product.price} VND</p>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -49,7 +58,7 @@ const ProductScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>
-                    <h8>Tình trạng:</h8>
+                    <p>Tình trạng:</p>
                   </Col>
                   <Col>
                     {product.countInStock > 0 ? 'Còn hàng' : 'Đã bán hết'}
