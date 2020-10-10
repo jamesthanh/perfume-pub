@@ -23,4 +23,22 @@ const authUser = aysncHandler(async (req, res) => {
   }
 });
 
-export { authUser };
+// @desc get user profile
+// @route POST /api/users/profile
+// @access Private
+const getUserProfile = aysncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    throw new Error('User not found');
+  }
+});
+
+export { authUser, getUserProfile };
