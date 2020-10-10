@@ -18,7 +18,7 @@ const getProductById = aysncHandler(async (req, res) => {
     res.json(product);
   } else {
     res.status(404);
-    throw new Error('Không tìm thấy sản phẩm');
+    throw new Error('Không tìm thấy s ản phẩm');
   }
 });
 
