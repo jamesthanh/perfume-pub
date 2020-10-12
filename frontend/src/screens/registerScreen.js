@@ -5,16 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormController from '../components/FormController';
-import { login } from '../actions/userActions';
+import { register } from '../actions/userActions';
 
-const LoginScreen = ({ location, history }) => {
+const RegisterScreen = ({ location, history }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
@@ -26,15 +29,30 @@ const LoginScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    if (password !== confirmPassword) {
+      setMessage('Mật khẩu xác nhận không trùng');
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
     <FormController>
-      <h1>Đăng nhập</h1>
+      <h1>Đăng ký</h1>
+      {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
+        <Form.Group controlId='name'>
+          <Form.Label>Tên</Form.Label>
+          <Form.Control
+            type='name'
+            placeholder='Nhập Tên của bạn'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
         <Form.Group controlId='email'>
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -54,15 +72,26 @@ const LoginScreen = ({ location, history }) => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
+
+        <Form.Group controlId='confirmPassword'>
+          <Form.Label>Xác nhận mật Khẩu</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='Hãy nhập lại mật khẩu'
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
         <Button type='submit' variant='primary'>
-          Đăng nhập
+          Đăng ký
         </Button>
       </Form>
       <Row className='py-3'>
         <Col>
-          Khách hàng mới?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-            Đăng ký ngay
+          Khách hàng thân thiết?{' '}
+          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+            Đăng nhập
           </Link>
         </Col>
       </Row>
@@ -70,4 +99,4 @@ const LoginScreen = ({ location, history }) => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

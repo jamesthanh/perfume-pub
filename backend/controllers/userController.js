@@ -19,7 +19,7 @@ const authUser = aysncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error('Invaild cresdentials');
+    throw new Error('Tài khoảng hoặc mật khẩu không đúng');
   }
 });
 
