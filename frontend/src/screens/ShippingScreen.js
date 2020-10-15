@@ -10,6 +10,7 @@ const ShippingScreen = ({ history }) => {
   const { shippingAddress } = cart;
 
   const [address, setAddress] = useState(shippingAddress.address);
+  const [phoneNumber, setPhoneNumber] = useState(shippingAddress.phoneNumber);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
@@ -18,7 +19,9 @@ const ShippingScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    dispatch(
+      saveShippingAddress({ address, phoneNumber, city, postalCode, country })
+    );
 
     history.push('/payment');
   };
@@ -36,6 +39,17 @@ const ShippingScreen = ({ history }) => {
             value={address}
             required
             onChange={(e) => setAddress(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='phoneNumber'>
+          <Form.Label>Số điện thoại</Form.Label>
+          <Form.Control
+            type='number'
+            placeholder='Số điện thoại'
+            value={phoneNumber}
+            required
+            onChange={(e) => setPhoneNumber(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
