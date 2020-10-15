@@ -14,9 +14,9 @@ const OrderScreen = ({ match }) => {
   const { order, loading, error } = orderDetails;
 
   if (!loading) {
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2);
-    };
+    // const addDecimals = (num) => {
+    //   return (Math.round(num * 100) / 100).toFixed(2);
+    // };
 
     // Cal prices
     order.itemsPrice = order.orderItems.reduce(
@@ -27,7 +27,7 @@ const OrderScreen = ({ match }) => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-  }, []);
+  }, [dispatch, orderId]);
 
   return loading ? (
     <Loader />
