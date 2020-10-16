@@ -70,7 +70,7 @@ const CartScreen = ({ match, location, history }) => {
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>
-                    <p>{item.price} VND</p>
+                    <p>{item.price} </p>
                   </Col>
                   <Col>
                     <Form.Control
@@ -114,10 +114,7 @@ const CartScreen = ({ match, location, history }) => {
               Đơn tiền của ({cartItems.reduce((acc, item) => acc + item.qty, 0)}
               ) sản phẩm
             </h2>
-            {cartItems
-              .reduce((acc, item) => acc + item.qty * item.price, 0)
-              .toFixed(2)}{' '}
-            VND
+            {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)}
           </ListGroup.Item>
           <ListGroup.Item>
             <Button

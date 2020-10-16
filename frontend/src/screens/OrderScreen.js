@@ -22,14 +22,13 @@ const OrderScreen = ({ match }) => {
   const { loading: loadingPay, success: successPay } = orderPay;
 
   if (!loading) {
-    // const addDecimals = (num) => {
-    //   return (Math.round(num * 100) / 100).toFixed(2);
-    // };
+    //   Calculate prices
+    const addDecimals = (num) => {
+      return (Math.round(num * 100) / 100).toFixed(2);
+    };
 
-    // Cal prices
-    order.itemsPrice = order.orderItems.reduce(
-      (acc, item) => acc + item.price * item.qty,
-      0
+    order.itemsPrice = addDecimals(
+      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
 
@@ -139,7 +138,7 @@ const OrderScreen = ({ match }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x {item.price}₫ = {item.qty * item.price}₫
+                          {item.qty} x {item.price} = {item.qty * item.price}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -158,25 +157,25 @@ const OrderScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Sản phẩm</Col>
-                  <Col>{order.itemsPrice}₫</Col>
+                  <Col>{order.itemsPrice} </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Phí vận chuyển</Col>
-                  <Col>{order.shippingPrice}₫</Col>
+                  <Col>{order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Thuế</Col>
-                  <Col>{order.taxPrice}₫</Col>
+                  <Col>{order.taxPrice} </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tổng cộng</Col>
-                  <Col>{order.totalPrice}₫</Col>
+                  <Col>{order.totalPrice} </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item></ListGroup.Item>

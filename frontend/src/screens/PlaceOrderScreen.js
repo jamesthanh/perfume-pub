@@ -11,25 +11,25 @@ const PlaceOrderScreen = ({ history }) => {
 
   const cart = useSelector((state) => state.cart);
 
+  // const addDecimals = (num) => {
+  //   return (Math.round(num * 100) / 100).toFixed(2);
+  // };
+
+  //   Calculate prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
-  // Cal prices
-
-  cart.itemsPrice = cart.cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
-
-  cart.shippingPrice = 10;
-
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
-
-  cart.totalPrice =
+  cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
-    Number(cart.taxPrice);
+    Number(cart.taxPrice)
+  ).toFixed(2);
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
@@ -102,7 +102,9 @@ const PlaceOrderScreen = ({ history }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x {item.price}₫ = {item.qty * item.price}₫
+                          {item.qty} x {item.price}
+                          {' = '}
+                          {item.qty * item.price}{' '}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -124,25 +126,25 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Sản phẩm</Col>
-                  <Col>{cart.itemsPrice}₫</Col>
+                  <Col>{cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Phí vận chuyển</Col>
-                  <Col>{cart.shippingPrice}₫</Col>
+                  <Col>{cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Thuế</Col>
-                  <Col>{cart.taxPrice}₫</Col>
+                  <Col>{cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tổng cộng</Col>
-                  <Col>{cart.totalPrice}₫</Col>
+                  <Col>{cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
               {error && <Message variant='danger'>{error}</Message>}
