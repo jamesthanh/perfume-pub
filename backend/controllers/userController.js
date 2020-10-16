@@ -99,4 +99,12 @@ const updateUserProfile = aysncHandler(async (req, res) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser, updateUserProfile };
+// @desc get all users
+// @route POST /api/users
+// @access Private/Admin
+const getUsers = aysncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
+});
+
+export { authUser, getUserProfile, registerUser, updateUserProfile, getUsers };
