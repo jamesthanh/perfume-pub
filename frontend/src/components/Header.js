@@ -46,9 +46,9 @@ const Header = () => {
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Quản Lý' id='adminmenu'>
                   <LinkContainer to='/admin/userlist'>
-                    <NavDropdown.Item>Khách hàng</NavDropdown.Item>
+                    <NavDropdown.Item>Khách Hàng</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/userlist'>
+                  <LinkContainer to='/admin/productlist'>
                     <NavDropdown.Item>Kho</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to='/admin/orderlist'>
