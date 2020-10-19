@@ -76,6 +76,24 @@ const updateOrderToPaid = aysncHandler(async (req, res) => {
   }
 });
 
+// @desc Update order status to delivered
+// @route GET /api/orders/:id/deliver
+// @access Private/Admin
+const updateOrderToDelivered = aysncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 // @desc Get logged in user order
 // @route GET /api/orders/myorders
 // @access Private
@@ -96,6 +114,7 @@ export {
   addOrderItems,
   getOrderById,
   updateOrderToPaid,
+  updateOrderToDelivered,
   getMyOrders,
   getOrders,
 };
